@@ -10,7 +10,8 @@ export default async function handler(req, res) {
   if (!API_KEY) return res.status(500).json({ error: "API key no configurada" });
 
   try {
-    const { system, messages } = req.body;
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const { system, messages } = body;
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
